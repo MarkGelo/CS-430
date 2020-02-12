@@ -8,7 +8,6 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class window extends JPanel{
-    //TODO add swap, array accesses, count as data for the algorithm
     JFrame frame;
     JButton start;
     JButton stop;
@@ -120,10 +119,9 @@ public class window extends JPanel{
     int n = 100; // default size of array to sort is 100
     ArrayList<int[]> arrayL = new ArrayList<int[]>(n);
     ArrayList<int[]> mergedL = new ArrayList<int[]>(n);
-    int[] mergedArray = new int[]{1,2,3};//TODO make a new isntance var just for merging algo
+    int[] mergedArray = new int[]{1,2,3};
     boolean merging;
     boolean compare = false;
-    //TODO why tf does it have some missing rectangles when n = 500
     public void setup(){
         randomArray(n);
         randomMergedArray(n);
@@ -249,7 +247,6 @@ public class window extends JPanel{
         Graphics2D main = (Graphics2D) g;
         double width;
         if(!compare){ //if not comparing then checks if either doing insertion or merging
-        //TODO make this shit scalable, the height, width, and colors
         if(mergingAgainCuzIDKwatswrong){
             g.drawString("Merge Swaps: ", 25,25);
             g.drawString(Integer.toString(mergeSwap), 125,25);
