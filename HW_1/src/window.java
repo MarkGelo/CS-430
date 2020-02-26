@@ -132,6 +132,7 @@ public class window extends JPanel{
     int[] mergedArray = new int[]{1,2,3};
     boolean merging;
     boolean compare = false;
+    //bruh
     public void setup(){//setups the gui
         //intializes random arrays for insertion and merge - all in background tho
         randomArray(n);
