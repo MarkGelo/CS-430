@@ -7,6 +7,9 @@ public class algorithms {
     int[] origArray = new int[n]; // to keep orig array in case user wants to compare
     int[] toSort; // the array to be sorted and updated
     Random rand = new Random(); // for the shuffling method
+    // for the time elapsed
+    long start, end;
+    long timeElapsed;
     //ararylist for the animation
     private ArrayList<int[]> sorting = new ArrayList<int[]>(n * n);
 
@@ -18,6 +21,7 @@ public class algorithms {
 
     public ArrayList<int[]> sort(String algo){
         //checks which the user selected and does the sort
+        start = System.nanoTime(); // starts the timer for the time elapsed
         if(algo.equals("Insertion")){
             insertionSort();
         }else if(algo.equals("Merge")){
@@ -29,6 +33,8 @@ public class algorithms {
         }else{
             System.out.println("tf u doing");
         }
+        end = System.nanoTime();
+        timeElapsed = end - start; // gets how long the algorithm took to sort
         //returns the arraylist of the animation
         return sorting;
     }

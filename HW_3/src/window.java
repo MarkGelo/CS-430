@@ -14,8 +14,10 @@ public class window extends JPanel {
     JCheckBox compare;
     JComboBox algoBox;
     JTextField numberField;
+    //window size
     int windowWidth = 1000;
     int windowHeight = 600;
+    int numPlays = 0; // just so at start of gui, the array thats painted already dont get changed
     //init algo object which initializes arrays
     algorithms algo = new algorithms();
     int[] currentArr = algo.origArray.clone();
@@ -23,23 +25,29 @@ public class window extends JPanel {
     ArrayList<int[]> sorted;
     //for the animation
     boolean stopBool = false;
-    int count = 0;
-    int swaps = 0;
+    int count = 0; //inner count for the animation
+    int swaps = 0; // for the swap in gui
     boolean comparing;
-    Timer tm = new Timer(1, new ActionListener(){
+    boolean showTime = false;
+    Timer tm = new Timer(1, new ActionListener(){ // timer for the animation and painting
         public void actionPerformed(ActionEvent e){
-            if(stopBool){
+            if(stopBool){ // if the user clicked stop
                 ((Timer)e.getSource()).stop();
+                //sets these buttons to false/true
                 start.setEnabled(true);
                 stop.setEnabled(false);
-            }else if(count == sorted.size()){
+            }else if(count == sorted.size()){ // if finished animating
+                //resets the count
                 count = 0;
-                start.setEnabled(true);
+                start.setEnabled(true); // returns the buttons and stuff back to what they supposed to be
                 stop.setEnabled(false);
                 algoBox.setEnabled(true);
                 numberField.setEnabled(true);
+                showTime = true; // shows the time
                 tm.stop();
             }else{
+                // makes currentArr to be the next one in the arraylist
+                // for the animation
                 currentArr = sorted.get(count).clone();
                 swaps += 1;
                 count += 1;
@@ -103,18 +111,20 @@ public class window extends JPanel {
                             algo.setSize(Integer.parseInt(numberField.getText()));
                         }
                         numberField.setEnabled(false);
+                    }else if(numPlays == 0){ // so when user first clicks sort, doesnt change the current painted graph
+                        //do nothing
+                        numPlays += 1;
                     }
-                    else if(!comparing){ // default n and not comparing
+                    else if(!comparing) { // default n and not comparing
                         //for when the user input non default but then removed so back to default
                         algo.setSize(100);
                         comparing = false;
-                    }else{ //comparing, doesnt do setsize cuz setsize shuffles - keeps array the same
-                        //does nothing
                     }
 
                     sorted = algo.sort((String) Objects.requireNonNull(algoBox.getSelectedItem()));
                     // dont want null
                     //for the buttons and stuff to be disabled/enabled when clicked sort
+                    showTime = false;
                     stop.setEnabled(true);
                     start.setEnabled(false);
                     numberField.setEnabled(false);
@@ -160,6 +170,10 @@ public class window extends JPanel {
             double yPos = 50;
             main.setColor(Color.BLACK);
             main.fill(new Rectangle2D.Double(xPos, yPos, width, height));
+        }
+
+        if(showTime){
+            g.drawString("(Backend) Algorithm Time: " + algo.timeElapsed + " ns", 700, 25);
         }
     }
     public static int maxArray(int[] arr){//gets the maximum of the array
